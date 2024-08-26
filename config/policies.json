@@ -1,0 +1,65 @@
+{
+  "policies": [
+    {
+      "handler": {
+        "export": "SetQueryParamsInboundPolicy",
+        "module": "$import(@zuplo/runtime)",
+        "options": {
+          "params": [
+            {
+              "name": "apikey",
+              "value": "9948DQ4CYCxJ9YbYvuzYpLDvWDPgawyu"
+            }
+          ]
+        }
+      },
+      "name": "set-query-params-inbound",
+      "policyType": "set-query-params-inbound"
+    },
+    {
+      "handler": {
+        "export": "ApiKeyInboundPolicy",
+        "module": "$import(@zuplo/runtime)",
+        "options": {
+          "allowUnauthenticatedRequests": false,
+          "cacheTtlSeconds": 60
+        }
+      },
+      "name": "api-key-inbound",
+      "policyType": "api-key-inbound"
+    },
+    {
+      "handler": {
+        "export": "CachingInboundPolicy",
+        "module": "$import(@zuplo/runtime)",
+        "options": {
+          "cacheHttpMethods": [
+            "GET"
+          ],
+          "expirationSecondsTtl": 60,
+          "headers": "content-type",
+          "statusCodes": [
+            200,
+            201,
+            404
+          ]
+        }
+      },
+      "name": "caching-inbound",
+      "policyType": "caching-inbound"
+    },
+    {
+      "handler": {
+        "export": "RateLimitInboundPolicy",
+        "module": "$import(@zuplo/runtime)",
+        "options": {
+          "rateLimitBy": "ip",
+          "requestsAllowed": 2,
+          "timeWindowMinutes": 1
+        }
+      },
+      "name": "rate-limit-inbound",
+      "policyType": "rate-limit-inbound"
+    }
+  ]
+}
